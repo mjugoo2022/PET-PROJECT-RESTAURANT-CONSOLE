@@ -18,6 +18,7 @@
 !.gitignore
 !GraphQLFragmentTypes.json
 *.Cache
+.vs
 
 
 # User-specific files (MonoDevelop/Xamarin Studio)
