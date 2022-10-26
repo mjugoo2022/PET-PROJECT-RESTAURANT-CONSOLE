@@ -1,0 +1,47 @@
+[
+  {
+    "mealNo": 1,
+    "mealName": "Chicken Pad Thai",
+    "price": 325,
+    "quantity": 2
+  },
+  {
+    "mealNo": 2,
+    "mealName": "Green Thai curry",
+    "price": 275,
+    "quantity": 2
+  },
+  {
+    "mealNo": 3,
+    "mealName": "Creamy chicken pasta",
+    "price": 250,
+    "quantity": 1
+  },
+
+  {
+    "mealNo": 4,
+    "mealName": "Italian pizza - Large",
+    "price": 425,
+    "quantity": 3
+  },
+  {
+    "mealNo": 5,
+    "mealName": "Hot chicken wings",
+    "price": 350,
+    "quantity": 1
+  },
+
+  {
+    "mealNo": 6,
+    "mealName": "Shrimp Alfredo pasta",
+    "price": 325,
+    "quantity": 4
+  },
+  {
+    "mealNo": 7,
+    "mealName": "Chicken barbeque Pizza",
+    "price": 325,
+    "quantity": 4
+  }
+
+]
