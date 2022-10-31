@@ -12,16 +12,32 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
 {
     class Program
     {
+
+
+
         static void Main(string[] args)
         {
 
 
-
             Connection connect = new Connection();
+            //Console.WriteLine("Press Z to view order report");
+            //ConsoleKey reportkey;
+            //reportkey = Console.ReadKey(true).Key;
+
+            //if (reportkey == ConsoleKey.Z)
+            //{
+            //    Console.WriteLine("Order Report");
+            //    Console.WriteLine();
+            //    connect.DisplayReport();
+            //    Console.WriteLine();
+             
+
+            //}
+
+            Console.WriteLine();
+
             //instantiate object
             MenuHelper menuhelper = new MenuHelper();
-
-
 
             Console.WriteLine("WELCOME TO MO-RESTAURANT!");
             Console.WriteLine();
@@ -31,6 +47,9 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
             string menuJsonData = File.ReadAllText("C:\\Users\\mjugoo\\source\\repos\\PET PROJECT - RESTAURANT CONSOLE\\PET PROJECT - RESTAURANT CONSOLE\\menu.json");
             //deserialize json into list
             var menuList = JsonSerializer.Deserialize<List<Menu_list>>(menuJsonData);
+
+
+
             //check if menu list is null 
             if (menuList != null)
             {
@@ -40,9 +59,31 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
 
                     //String interpolation - Inject object into string
                     Console.WriteLine($"{menu.mealNo}\t{menu.mealName}\t \t{menu.price}");
+
                     //Result: 1 Chicken Pad Thai 1 325
                 }
+
+
+
             }
+
+
+            Console.WriteLine();
+
+            Console.WriteLine(" Admin: press Z to view order report2, User: Press enter to continue");
+            ConsoleKey reportkey;
+            reportkey = Console.ReadKey(true).Key;
+
+            if (reportkey == ConsoleKey.Z)
+            {
+                Console.WriteLine("Order Report");
+                Console.WriteLine();
+                connect.DisplayReport();
+                Console.WriteLine();
+
+
+            }
+
             Console.WriteLine();
             string fname;
             Console.WriteLine("Please enter your first name");
@@ -139,6 +180,7 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
             Console.WriteLine("Customer name:" + " " + string.Concat(fname, " ", lname));
 
             var total = 0.0;
+            ConsoleDataFormatter.PrintLine();
 
             foreach (var userinput in ItemList)
             {
@@ -150,7 +192,7 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
 
             }
 
-            //serialize item list
+            //serialize item list 
             var menulistObj = Newtonsoft.Json.JsonConvert.SerializeObject(ItemList);
 
 
@@ -162,41 +204,18 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
             Console.WriteLine();
             Console.WriteLine("purchase completed!");
 
-            //connect.SaveToOrder();
-            //connect.SaveToCustomer();
-          //connect.SaveTest("test fname", "test lname");
             Console.WriteLine("Added successfully!");
-
-            //connect.SaveToCustomer();
-            //connect.SaveTest();
-            //connect.SaveTotalPrice();
-            connect.DisplayReport();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
 
         private static void displayMenu(string menuName)
         {
             Console.WriteLine("Your meal " + menuName);
         }
+
+        //Display info in Console Table
+
+
+
     }
 }
 

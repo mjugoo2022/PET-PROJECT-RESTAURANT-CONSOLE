@@ -43,26 +43,6 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
 
 
 
-        //public void SaveToCustomer()
-        //{
-        //    var stm = "INSERT INTO tbl_customer (fname,lname)" + " values ('menisha','jugoo')";
-        //    var cmd = new MySqlCommand(stm, _connect);
-        //    cmd.Prepare();
-        //    cmd.ExecuteNonQuery();
-        //}
-
-
-        //public void SaveToOrder()
-        //{
-        //    var stm = "INSERT INTO tbl_order (order_details,customer_id,total_price) values ('chicken burger, 2, 195', 2,390)";
-        //    var cmd = new MySqlCommand(stm, _connect);
-
-        //    cmd.Prepare();
-        //    cmd.ExecuteNonQuery();
-        //}
-
-
-
         public Customer InsertCustomer(string fname, string lname)
         {
             var statementInsrt = $"INSERT INTO tbl_customer(fname, lname) values('{fname}','{lname}')";
@@ -73,7 +53,7 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
 
             cmd.Prepare();
             cmd.ExecuteNonQuery();
-
+              
             return FetchCustomerByName(fname, lname);
 
 
@@ -129,12 +109,32 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
 
         public void DisplayReport()
         {
-            var stsSelectAllOrder = $"SELECT * FROM tbl_order ord, tbl_customer cust where cust.customer_id=ord.customer_id ";
+            var stsSelectAllOrder = $"SELECT ord.order_id,ord.order_details,ord.total_price,ord.date_time,cust.customer_id,cust.fname,cust.lname FROM tbl_order ord, tbl_customer cust where cust.customer_id = ord.customer_id ";
             var cmd2 = new MySqlCommand(stsSelectAllOrder, _connect);
             cmd2.Prepare();
             cmd2.ExecuteNonQuery();
-            Console.WriteLine(stsSelectAllOrder);
+            using (var dr = cmd2.ExecuteReader())
+            {
+                if (dr.HasRows)
+                {
+                    //String.Format("|{0,5}|{1,5}|{2,5}|{3,5}|", );
+                    ConsoleDataFormatter.PrintRow("Order no" , "Order details" ,"total price" , "Date/Time of order", "customer no", "fname","lname");
 
+                    while (dr.Read())
+                    {
+                        //Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", dr.GetInt32(0),
+                        //               dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetInt32(4), dr.GetValue(5));
+                        ConsoleDataFormatter.PrintRow(dr.GetInt32(0).ToString(), dr.GetString(1), dr.GetInt32(2).ToString(), dr.GetValue(3).ToString(), dr.GetInt32(4).ToString(), dr.GetString(5), dr.GetString(6));
+
+                    }
+
+                    ConsoleDataFormatter.PrintLine();
+
+                }
+
+
+                return;
+            }
 
         }
 
