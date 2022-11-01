@@ -30,7 +30,7 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
             //    Console.WriteLine();
             //    connect.DisplayReport();
             //    Console.WriteLine();
-             
+
 
             //}
 
@@ -44,7 +44,7 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
             Console.WriteLine("--------------------MENU-------------------");
             Console.WriteLine();
 
-            string menuJsonData = File.ReadAllText("C:\\Users\\mjugoo\\source\\repos\\PET PROJECT - RESTAURANT CONSOLE\\PET PROJECT - RESTAURANT CONSOLE\\menu.json");
+            string menuJsonData = File.ReadAllText(@"C:\Users\mjugoo\source\repos\PET PROJECT - RESTAURANT CONSOLE\PET PROJECT - RESTAURANT CONSOLE\menu.json");
             //deserialize json into list
             var menuList = JsonSerializer.Deserialize<List<Menu_list>>(menuJsonData);
 
@@ -70,7 +70,7 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
 
             Console.WriteLine();
 
-            Console.WriteLine(" Admin: press Z to view order report2, User: Press enter to continue");
+            Console.WriteLine(" Admin: press Z to view order report, User: Press enter to continue");
             ConsoleKey reportkey;
             reportkey = Console.ReadKey(true).Key;
 
@@ -85,7 +85,7 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
             }
 
             Console.WriteLine();
-            string fname;
+            var fname = string.Empty;
             Console.WriteLine("Please enter your first name");
             fname = Console.ReadLine();
             string lname;
@@ -100,11 +100,11 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
             Console.WriteLine("Please select the meal number to order:");
 
             // Create a string variable and get user input from the keyboard and store it in the variable
-            string meal = Console.ReadLine();
+            var meal = Console.ReadLine();
             Console.WriteLine();
 
             Console.WriteLine("Details:");
-            List<SelectedItem> ItemList = new List<SelectedItem>();
+            var itemList = new List<SelectedItem>();
 
 
             while (true)
@@ -112,7 +112,7 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
                 //convert menu id to integer
                 int menuIdInt;
 
-                if (Int32.TryParse(meal, out menuIdInt))
+                if (int.TryParse(meal, out menuIdInt))
                 {
                     menuIdInt = Int32.Parse(meal);
                 }
@@ -145,7 +145,7 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
                     {
 
                         selectedItem.Quantity = quantityInt;
-                        ItemList.Add(selectedItem);
+                        itemList.Add(selectedItem);
 
                         //fetch price
                     }
@@ -180,23 +180,24 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
             Console.WriteLine("Customer name:" + " " + string.Concat(fname, " ", lname));
 
             var total = 0.0;
+
             ConsoleDataFormatter.PrintLine();
 
-            foreach (var userinput in ItemList)
+            foreach (var userinput in itemList)
             {
                 var x = menuhelper.TotalPricePerMenu(menuList, userinput.MenuId, userinput.Quantity);
+
                 total = total + x;
 
                 //call save method with (firstname, lastname, menu list selected, total price)
-             Console.WriteLine(userinput.MenuId + " " + userinput.MealName + " " + userinput.Quantity + " " + x);
+                Console.WriteLine(userinput.MenuId + " " + userinput.MealName + " " + userinput.Quantity + " " + x);
 
             }
 
             //serialize item list 
-            var menulistObj = Newtonsoft.Json.JsonConvert.SerializeObject(ItemList);
+            var menulistObj = Newtonsoft.Json.JsonConvert.SerializeObject(itemList);
 
-
-            connect.InsertOrderDetails(((int) total), fname, lname, menulistObj);
+            connect.InsertOrderDetails(((int)total), fname, lname, menulistObj);
 
             Console.WriteLine(menulistObj);
             Console.WriteLine("Total amount to be paid:" + total);
@@ -205,17 +206,13 @@ namespace PET_PROJECT___RESTAURANT_CONSOLE
             Console.WriteLine("purchase completed!");
 
             Console.WriteLine("Added successfully!");
+            Console.ReadKey();
         }
 
         private static void displayMenu(string menuName)
         {
             Console.WriteLine("Your meal " + menuName);
         }
-
-        //Display info in Console Table
-
-
-
     }
 }
 
